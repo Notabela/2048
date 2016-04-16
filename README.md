@@ -13,6 +13,9 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
+All implementation is object oriented
+
+run using run_game.py file and then specify game with and height
 
 Implenting the slide and merge animation was challenging. This feature is currently still being worked on
 
