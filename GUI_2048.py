@@ -141,7 +141,7 @@ class GUITwentyFortyEight:
                 if grid[i][j] != 0:
                     global font
                     #the value of the tile 2,4,8 etc
-                    int_value = grid[i][j]
+                    int_value = grid[i][j].value
                     str_value = str(int_value)
 
                     #text_len = len(value)

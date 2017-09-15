@@ -6,18 +6,18 @@ Tile Class representing a 2048 tile
 class Tile:
 
     # Tile with value = 0 is an empty tile
-    def __init__(self, value: int, x_cor: int=0, y_cor: int=0):
+    def __init__(self, value: int, row: int=0, col: int=0):
         self.value = value
-        self.x = x_cor
-        self.y = y_cor
+        self.row = row
+        self.col = col
 
         # References to tile that formed this
         self.source = None
         self.target = None
 
-    def set_location(self, x_cor: int, y_cor: int):
-        self.x = x_cor
-        self.y = y_cor
+    def set_location(self, row: int, col: int):
+        self.row = row
+        self.col = col
 
     # OVERLOAD OBJECTS TO BE COMPARED TO OTHER
     def __lt__(self, other):
@@ -78,9 +78,3 @@ class Tile:
 
     def __repr__(self):
         return str(self.value)
-
-if __name__ == "__main__":
-    tile = Tile(4)
-    tile2 = Tile(8)
-
-    print(tile > 3)

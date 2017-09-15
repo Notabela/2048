@@ -3,6 +3,7 @@ An Implementation of the 2048 game
 """
 from random import randrange
 from numpy import array_equal
+from Tile import *
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -28,13 +29,13 @@ def merge(line):
 
     # Slide all non-zeroes to the right
     result_list = [val for val in line if val > 0]
-    result_list += [0] * (length - len(result_list))
+    result_list += [Tile(0)] * (length - len(result_list))
 
     # Merge all numbers possible and slide while merging
-    for index in range(1,length):
+    for index in range(1, length):
         if result_list[index-1] == result_list[index]:
-            result_list[index-1] *= 2
-            result_list[index] = 0
+            result_list[index-1] += result_list[index]
+            result_list[index] = Tile(0)
 
             # Slide all zeroes to right
             for index_2 in range(index+1, length):
@@ -81,7 +82,7 @@ class TwentyFortyEight:
         """
         Create a new empty board with 2 tiles and init for gameplay
         """
-        self.grid = [[0 for dummy_col in range(self._grid_width)] for dummy_row in range(self._grid_height)]
+        self.grid = [[Tile(0, row, col) for col in range(self._grid_width)] for row in range(self._grid_height)]
 
         self.new_tile()
         self.new_tile()
@@ -119,7 +120,7 @@ class TwentyFortyEight:
         (row, col) = get_rand()
 
         # Add new tile to the board with 90% chance of 2 and 10% chance of 4
-        self.grid[row][col] = 4 if randrange(1, 11) == 10 else 2
+        self.grid[row][col] = Tile(4, row, col) if randrange(1, 11) == 10 else Tile(2, row, col)
 
         # return the coordinate of the tile
         self.new_tiles.append((row, col))
@@ -136,15 +137,15 @@ class TwentyFortyEight:
         """
         return self._grid_width
 
-    def set_tile(self, row, col, value):
+    def set_tile(self, row, col, tile):
         """
         :param row: int
         :param col: int
-        :param value: int
+        :param tile: Tile
         :return: void
         sets value at grid[row][col] to value
         """
-        self.grid[row][col] = value
+        self.grid[row][col] = tile
 
     def get_tile(self, row, col):
         """
@@ -181,17 +182,17 @@ class TwentyFortyEight:
             :param start_cell: Beginning cell
             :param direc:  Direction to move in
             :param num_steps: Number of steps
-            :return: Returns a tuple with grid list and indices
+            :return: Returns a tuple with grid list and indexes
             """
             move = []
-            indice = []
+            indexes = []
             for step in range(num_steps):
                 row_ = start_cell[0] + step * direc[0]
                 col_ = start_cell[1] + step * direc[1]
-                indice.append((row_, col_))
+                indexes.append((row_, col_))
                 move.append(self.grid[row_][col_])
 
-            return move, indice
+            return move, indexes
 
         tiles = self._move_dict[direction]
         steps = self._steps_dict[direction]
