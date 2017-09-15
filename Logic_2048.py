@@ -17,6 +17,7 @@ OFFSETS = {UP: (1, 0),
            LEFT: (0, 1),
            RIGHT: (0, -1)}
 
+
 def merge(line):
     """
     :param line: list()
@@ -35,7 +36,7 @@ def merge(line):
             result_list[index-1] *= 2
             result_list[index] = 0
 
-            #Slide all zeroes to right
+            # Slide all zeroes to right
             for index_2 in range(index+1, length):
                 temp = result_list[index_2-1]
                 result_list[index_2-1] = result_list[index_2]
@@ -61,19 +62,19 @@ class TwentyFortyEight:
 
         self.new_tiles = []
 
-        #Compute indices of initial tiles
+        # Compute indices of initial tiles
         _up = [(0, col) for col in range(0, grid_width)]
         down = [(grid_height - 1, col) for col in range(0, grid_width)]
         left = [(row, 0) for row in range(0, grid_height)]
         right = [(col, grid_width - 1) for col in range(0, grid_height)]
 
-        #Dictionary of tiles
+        # Dictionary of tiles
         self._move_dict = {UP: _up, DOWN: down, LEFT: left, RIGHT: right}
 
-        #Dictionary specificing num_steps for offsett
+        # Dictionary specificing num_steps for offsett
         self._steps_dict = {1: self._grid_height, 2: self._grid_height, 3: self._grid_width, 4: self._grid_width}
 
-        #init board and I get the row and cols of the new tiles inserted
+        # init board and I get the row and cols of the new tiles inserted
         self.reset()
 
     def reset(self):
@@ -101,7 +102,7 @@ class TwentyFortyEight:
         if not zero:
             return
 
-        #recursive function to return a zero row and col
+        # recursive function to return a zero row and col
         def get_rand():
             """
             :return: A random row and col of the new tile
@@ -114,13 +115,13 @@ class TwentyFortyEight:
             else:
                 return get_rand()
 
-        #Get row and col from function
+        # Get row and col from function
         (row, col) = get_rand()
 
-        #Add new tile to the board with 90% chance of 2 and 10% chance of 4
+        # Add new tile to the board with 90% chance of 2 and 10% chance of 4
         self.grid[row][col] = 4 if randrange(1, 11) == 10 else 2
 
-        #return the coordinate of the tile
+        # return the coordinate of the tile
         self.new_tiles.append((row, col))
 
     def get_grid_height(self):
@@ -170,11 +171,11 @@ class TwentyFortyEight:
         """
         Get list of numbers in move direction - returns the row and col of the new tile inserted
         """
-        #store old grid before altering
+        # store old grid before altering
         self.old_grid["grid"] = [[i for i in j] for j in self.grid]
         self.old_grid["move"] = direction
 
-        #Create a temporary move_list to be passed to merge
+        # Create a temporary move_list to be passed to merge
         def make_move_list(start_cell, direc, num_steps):
             """
             :param start_cell: Beginning cell
